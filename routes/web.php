@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResumeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -16,24 +17,18 @@ Route::get('/', function () {
 });
 
 // Dashboard routes
-Route::get('/dashboard', [ResumeController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
     ->name('dashboard');
 
-// Personal info routes
-Route::get('/personal-info', function () {
-    return Inertia::render('PersonalInfo/Index');
-})->middleware(['auth', 'verified'])->name('personal-info');
-
-// Education routes
-Route::get('/education', function () {
-    return Inertia::render('Education/Index');
-})->middleware(['auth', 'verified'])->name('education');
-
-// Employment history routes
-Route::get('/employment-history', function () {
-    return Inertia::render('EmploymentHistory/Index');
-})->middleware(['auth', 'verified'])->name('employment-history');
+// Create resume routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/resume', [ResumeController::class, 'index'])->name('resume');
+    Route::post('/resume', [ResumeController::class, 'store'])->name('resume.store');
+    Route::delete('/resume/{resume}', [ResumeController::class, 'destroy'])->name('resume.destroy');
+    Route::get('/resume/{resume}', [ResumeController::class, 'edit'])->name('resume.edit');
+    Route::put('/resume/{resume}', [ResumeController::class, 'update'])->name('resume.update');
+});
 
 // User auth routes
 Route::middleware('auth')->group(function () {

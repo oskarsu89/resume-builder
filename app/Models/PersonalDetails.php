@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Resume;
 
-class PersonalInfo extends Model
+class PersonalDetails extends Model
 {
     use HasFactory;
 
@@ -19,7 +20,7 @@ class PersonalInfo extends Model
         'address'
     ];
 
-    public function resume()
+    public function resume(): BelongsTo
     {
         return $this->belongsTo(Resume::class);
     }

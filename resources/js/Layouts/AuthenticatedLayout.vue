@@ -32,14 +32,8 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('personal-info')" :active="route().current('personal-info')">
-                                    Personal info
-                                </NavLink>
-                                <NavLink :href="route('education')" :active="route().current('education')">
-                                    Education
-                                </NavLink>
-                                <NavLink :href="route('employment-history')" :active="route().current('employment-history')">
-                                    Employment history
+                                <NavLink :href="route('resume')" :active="route().current('resume')">
+                                    Resume
                                 </NavLink>
                             </div>
                         </div>
@@ -125,14 +119,8 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('personal-info')" :active="route().current('personal-info')">
-                            Personal info
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('education')" :active="route().current('education')">
-                            Education
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('employment-history')" :active="route().current('employment-history')">
-                            Employment history
+                        <ResponsiveNavLink :href="route('resume')" :active="route().current('resume')">
+                            Resume
                         </ResponsiveNavLink>
                     </div>
 

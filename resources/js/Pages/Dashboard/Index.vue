@@ -1,6 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
+import DangerButton from '@/Components/DangerButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -8,6 +10,23 @@ const props = defineProps({
 });
 
 const hasResumes = computed(() => props.resumes.length > 0);
+
+const deleteResume = (resume) => {
+    if (confirm('Are you sure you want to delete this resume?')) {
+        router.delete(route('resume.destroy', resume.id), {
+            onSuccess: () => {
+                console.log('Resume deleted successfully');
+            },
+            onError: (errors) => {
+                console.error(errors);
+            }
+        });
+    }
+};
+
+const editResume = (resume) => {
+    router.visit(route('resume.edit', resume.id));
+};
 </script>
 
 <template>
@@ -25,10 +44,22 @@ const hasResumes = computed(() => props.resumes.length > 0);
                     <div class="p-6 text-gray-900">
                         <!-- Display resumes if available -->
                         <template v-if="hasResumes">
-                            <h3 class="text-lg font-bold mb-4">Your Resumes:</h3>
+                            <h2 class="text-xl font-bold mb-4">Your Resumes:</h2>
                             <ul>
-                                <li v-for="resume in props.resumes" :key="resume.id" class="mb-2">
-                                    {{ resume.title }}
+                                <li v-for="resume in props.resumes" :key="resume.id"
+                                    class="mb-2 flex justify-between items-center">
+                                    <h3 class="font-semibold text-l text-gray-800 leading-tight">{{ resume.title }}</h3>
+                                    <div class="flex space-x-4 mt-2">
+                                        <!-- Edit Button -->
+                                        <PrimaryButton @click="editResume(resume)">
+                                            Edit
+                                        </PrimaryButton>
+
+                                        <!-- Delete Button -->
+                                        <DangerButton @click="deleteResume(resume)">
+                                            Delete
+                                        </DangerButton>
+                                    </div>
                                 </li>
                             </ul>
                         </template>

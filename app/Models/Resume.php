@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\PersonalInfo;
+use App\Models\PersonalDetails;
 use App\Models\EmploymentHistory;
 use App\Models\Education;
 
@@ -15,22 +18,22 @@ class Resume extends Model
 
     protected $fillable = ['title', 'user_id'];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function personalInfo()
+    public function personalDetails(): HasOne
     {
-        return $this->hasOne(PersonalInfo::class);
+        return $this->hasOne(PersonalDetails::class);
     }
 
-    public function employmentHistories()
+    public function employmentHistory(): HasMany
     {
         return $this->hasMany(EmploymentHistory::class);
     }
 
-    public function education()
+    public function education(): HasMany
     {
         return $this->hasMany(Education::class);
     }

@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
 import DangerButton from '@/Components/DangerButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { Head, router } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -26,6 +27,10 @@ const deleteResume = (resume) => {
 
 const editResume = (resume) => {
     router.visit(route('resume.edit', resume.id));
+};
+
+const downloadResume = (resume) => {
+    window.location.href = route('resume.download', resume.id);
 };
 </script>
 
@@ -51,8 +56,13 @@ const editResume = (resume) => {
                                     <h3 class="font-semibold text-l text-gray-800 leading-tight">{{ resume.title }}</h3>
                                     <div class="flex space-x-4 mt-2">
                                         <!-- Edit Button -->
-                                        <PrimaryButton @click="editResume(resume)">
+                                        <SecondaryButton @click="editResume(resume)">
                                             Edit
+                                        </SecondaryButton>
+
+                                        <!-- Edit Button -->
+                                        <PrimaryButton @click="downloadResume(resume)">
+                                            Download
                                         </PrimaryButton>
 
                                         <!-- Delete Button -->

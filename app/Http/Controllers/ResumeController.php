@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Resume;
 use Illuminate\Http\RedirectResponse;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ResumeController extends Controller
 {
@@ -65,13 +66,13 @@ class ResumeController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        // Create PersonalDetails for the Resume
+        // Create personal details record
         $resume->personalDetails()->create($validated['personalDetails']);
 
-        // Create all EmploymentHistory records at once using createMany()
+        // Create employment history records
         $resume->employmentHistory()->createMany($validated['employmentHistory']);
 
-        // Create all Education records at once using createMany()
+        // Create education records
         $resume->education()->createMany($validated['education']);
 
         return redirect()->route('dashboard')->with('success', 'Resume created successfully!');
@@ -111,5 +112,16 @@ class ResumeController extends Controller
         $resume->education()->createMany($validated['education']);
 
         return redirect()->route('dashboard')->with('success', 'Resume updated successfully!');
+    }
+
+    public function download($id)
+    {
+        $resume = Resume::with(['personalDetails', 'employmentHistory', 'education'])->findOrFail($id);
+
+        // Create Resume PDF
+        $pdf = Pdf::loadView('pdf.resume', compact('resume'));
+
+        // Download the PDF
+        return $pdf->download('resume.pdf');
     }
 }

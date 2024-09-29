@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/resume/{resume}', [ResumeController::class, 'destroy'])->name('resume.destroy');
     Route::get('/resume/{resume}', [ResumeController::class, 'edit'])->name('resume.edit');
     Route::put('/resume/{resume}', [ResumeController::class, 'update'])->name('resume.update');
+    Route::get('/resume/{resume}/download', [ResumeController::class, 'download'])->name('resume.download');
 });
 
 // User auth routes
